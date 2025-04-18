@@ -75,7 +75,7 @@ select curdate()'Fecha';
 select curtime()'Hora';
 select sysdate()'Fecha y Hora';
 
--- 1- Borrar si existe la base de datos Negocio.
+1- Borrar si existe la base de datos Negocio.
 drop table if exists Negocio;
 -- 2- Crear la base de datos Negocio.
 create database Negocio;
@@ -136,38 +136,27 @@ stock int
 -- Stock		integer
 
 -- 7- Cargar 5 registros aleatorios en cada tabla.
-insert into Clientes (nombre, apellido, cuit, direccion, comentarios) values
-('Maria', 'Lunar''12354789', 'Sarmiento 4123', 'xxxxxxxxxxxxxxxxxxxxxx');
-insert into Clientes (nombre, apellido, cuit, direccion, comentarios) values
-('Elvis', 'Guaiquire''543215895', 'Sarmiento 4123', 'xxxxxxxxxxxxxxxxxxxxxx');
-insert into Clientes (nombre, apellido, cuit, direccion, comentarios) values
-('Vanessa', 'Guaiquire''987465213', 'Sarmiento 4123', 'xxxxxxxxxxxxxxxxxxxxxx');
-insert into Clientes (nombre, apellido, cuit, direccion, comentarios) values
-('Jose', 'Lopez''325897461', 'Sarmiento 4123', 'xxxxxxxxxxxxxxxxxxxxxx');
-insert into Clientes (nombre, apellido, cuit, direccion, comentarios) values
-('Ana', 'Gomez''756214896', 'Sarmiento 4123', 'xxxxxxxxxxxxxxxxxxxxxx');
 
-insert into Facturas (letra, numero, fecha, monto) values
-('A', '4''2025-03-24', '20000');
-insert into Facturas (letra, numero, fecha, monto) values
-('B', '3''2025-02-18', '30000');
-insert into Facturas (letra, numero, fecha, monto) values
-('C', '2''2024-12-15', '10000');
-insert into Facturas (letra, numero, fecha, monto) values
-('D', '1''2024-11-08', '5000');
-insert into Facturas (letra, numero, fecha, monto) values
-('E', '5''2024-09-21', '50000');
+INSERT INTO Clientes (nombre, apellido, cuit, direccion, comentarios) VALUES
+('Juan', 'Pérez', '20-12345678-9', 'Av. Corrientes 1234', 'Cliente frecuente'),
+('María', 'González', '27-98765432-1', 'Calle Mitre 567', 'Compra mayorista'),
+('Carlos', 'López', '23-45678901-2', 'Boulevard San Martín 890', 'Preferencia en pagos'),
+('Ana', 'Martínez', '21-34567890-3', 'Pasaje Colón 432', 'Reclamos recientes'),
+('Lucas', 'Fernández', '29-23456789-4', 'Ruta 8 Km 15', 'Visita mensual');
 
-insert into Articulos (nombre, precio, stock) values
-('Maria', '5000', '20');
-insert into Articulos (nombre, precio, stock) values
-('Angel', '2000', '10');
-insert into Articulos (nombre, precio, stock) values
-('Ana', '3000', '24');
-insert into Articulos (nombre, precio, stock) values
-('Luis', '24000', '15');
-insert into Articulos (nombre, precio, stock) values
-('Vanessa', '50000', '5');
+INSERT INTO Facturas (letra, numero, fecha, monto) VALUES
+('A', 0001, '2025-04-10', 2500.50),
+('B', 0002, '2025-04-11', 1350.75),
+('C', 0003, '2025-04-12', 780.40),
+('D', 0004, '2025-04-13', 3120.99),
+('E', 0005, '2025-04-14', 1589.60);
+
+INSERT INTO Articulos (nombre, precio, stock) VALUES
+('Laptop HP', 125000.00, 5),
+('Mouse Logitech', 3500.99, 20),
+('Monitor Samsung', 78000.75, 10),
+('Teclado mecánico', 23000.50, 15),
+('Auriculares Sony', 45000.99, 8);
 
 -- 8- Mostrar las tablas que tiene la base de datos negocio.
 show tables;
@@ -179,6 +168,4 @@ describe Articulos;
 select * from Clientes;
 select * from Facturas;
 select * from Articulos;
-drop table if exists clientes;
-
 
