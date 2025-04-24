@@ -23,8 +23,6 @@
 -- Update
 -- Delete
 
-
-
 -- -----------------------------------
 -- Tipos de datos más comunes en MySQL
 -- -----------------------------------
@@ -75,8 +73,10 @@ select curdate()'Fecha';
 select curtime()'Hora';
 select sysdate()'Fecha y Hora';
 
-1- Borrar si existe la base de datos Negocio.
-drop table if exists Negocio;
+show databases;
+drop database negocio;
+-- 1- Borrar si existe la base de datos Negocio.
+drop database if exists Negocio;
 -- 2- Crear la base de datos Negocio.
 create database Negocio;
 -- 3- Ingresar a la base de datos creada.
@@ -104,7 +104,7 @@ comentarios varchar(140)
 -- 5- Crear la tabla Facturas dentro de la base de datos con el siguiente detalle:
 
 create table Facturas(
-letra char,
+letra char, -- letra enum('A','B','C'),
 numero int,
 fecha date,
 monto double,
@@ -145,7 +145,7 @@ INSERT INTO Clientes (nombre, apellido, cuit, direccion, comentarios) VALUES
 ('Lucas', 'Fernández', '29-23456789-4', 'Ruta 8 Km 15', 'Visita mensual');
 
 INSERT INTO Facturas (letra, numero, fecha, monto) VALUES
-('A', 0001, '2025-04-10', 2500.50),
+('A', 0001, '2025-04-10', 2500.50), -- curdate()
 ('B', 0002, '2025-04-11', 1350.75),
 ('C', 0003, '2025-04-12', 780.40),
 ('D', 0004, '2025-04-13', 3120.99),
@@ -168,4 +168,5 @@ describe Articulos;
 select * from Clientes;
 select * from Facturas;
 select * from Articulos;
+
 
