@@ -1,26 +1,3 @@
--- Funciones de agrupamiento
--- Funcion sum(parametro)
-select sum(precio) total from articulos;
-select round(sum(stock*precio),2) valor_total,
-	   round(sum(stock*precio*1.21),2) total_con_iva from articulos;
-
--- Funcion min (parametros)
-select min(monto) factura_minima from facturas;
-select min(fecha) primer_factura from facturas;
-select min(nombre) primer_nombre from clientes;
-
--- Funcion max (parametros)
-select max(monto) factura_maxima from facturas;
-select max(fecha) ultima_factura from facturas;
-select max(nombre) ultimo_nombre from clientes;
-
--- Funcion avg (parametro) promedio
-select avg(monto) monto_promedio from facturas;
-
--- funcion count(*)
-select count(*) cantidad_clientes from clientes;
-select count(*) cantidad_facturas_A from facturas where letra='A';
-
 -- 1- Crear la tabla 'autos' en una nueva base de datos (Vehiculos) con el siguiente detalle:
 create database vehiculos;
 use vehiculos;
@@ -194,6 +171,21 @@ delete from empleados where nombre= 'susana' and apellido='mendez';
 update empleados set sueldo=sueldo*1.04 where sueldo>='5000';
 -- 6 Aplicar un aumento de sueldo del 8% a todos los empleados que tengan un 
 -- 		básico menor a 5000 pesos.
+update empleados set sueldo=sueldo*1.08 where sueldo<'5000';
 -- 7 Agregar el campo fecha de nacimiento (date) en la tabla empleados despues del campo apellido.
+alter table empleados add fecha_nacimiento date after apellido;
 -- 8 Completar una fecha de nacimiento para cada empleado.
+update empleados set fecha_nacimiento='1990-05-14' where codigo=1;
+update empleados set fecha_nacimiento='1985-08-22' where codigo=2;
+update empleados set fecha_nacimiento='1992-11-30' where codigo=3;
+update empleados set fecha_nacimiento='1988-12-05' where codigo=4;
+update empleados set fecha_nacimiento='1995-06-30' where codigo=5;
+update empleados set fecha_nacimiento='1983-03-18' where codigo=6;
+update empleados set fecha_nacimiento='1998-11-25' where codigo=7;
+update empleados set fecha_nacimiento='1991-02-14' where codigo=8;
+update empleados set fecha_nacimiento='1987-09-30' where codigo=9;
+
 -- 9 Listar todos los campos de empleados + una columna que calcule la edad de cada empleado.
+select codigo,nombre,apellido,fecha_nacimiento,seccion,sueldo, timestampdiff(year,fecha_nacimiento,curdate())edad from empleados;
+
+select codigo, nombre, apellido, fecha_nacimiento, seccion, sueldo, year(curdate())-year(fecha_nacimiento)edad from empleados;
