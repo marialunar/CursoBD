@@ -1,9 +1,7 @@
 -- Crear la base de datos del diagrama Reservas.png
 DROP DATABASE IF EXISTS reservas;
-CREATE DATABASE hotel;
 CREATE DATABASE reservas;
 show databases;
-use hotel;
 use reservas;
 show tables;
 drop table reservas;
@@ -61,7 +59,8 @@ INSERT INTO huespedes VALUES
 (2, 'Maria', 'García', 34600112233, 'maria.garcia@example.com', 'Avenida Siempre Viva 45', 'Madrid', 'España'),
 (3, 'Pedro', 'Rodríguez', 525512345678, 'pedro.rodriguez@example.com', 'Paseo de la Reforma 789', 'Ciudad de México', 'México'),
 (4, 'Ana', 'Martínez', 121234567890, 'ana.martinez@example.com', 'Main Street 10', 'New York', 'USA'),
-(5, 'Luisa', 'Fernández', 56987654321, 'luisa.fernandez@example.com', 'Diagonal 56', 'Santiago', 'Chile');
+(5, 'Luisa', 'Fernández', 56987654321, 'luisa.fernandez@example.com', 'Diagonal 56', 'Santiago', 'Chile'),
+(6, 'Camila', 'Jimenez', 1128456776, 'camila.jimenez@example.com', 'Sarmiento 4123', 'Buenos Aires', 'Argentina');
 
 INSERT INTO reservas VALUES
 (1, '2025-08-10 15:00:00', '2025-08-15 11:00:00', 101, 1),
@@ -69,7 +68,9 @@ INSERT INTO reservas VALUES
 (3, '2025-08-20 15:00:00', '2025-08-22 11:00:00', 102, 3),
 (4, '2025-10-01 15:00:00', '2025-10-07 11:00:00', 301, 4),
 (5, '2025-09-15 15:00:00', '2025-09-18 11:00:00', 202, 1),
-(6, '2025-11-01 15:00:00', '2025-11-03 11:00:00', 401, 5);
+(6, '2025-11-01 15:00:00', '2025-11-03 11:00:00', 401, 5),
+(7, '2025-08-10 15:00:00', '2025-08-15 11:00:00', 202, 6);
+
    
 -- Realizar consultas de prueba.
 select * from reservas; -- consulta de la tabla reserva
@@ -88,27 +89,39 @@ select nombres, apellidos, correo from huespedes where ciudad like 'Santiago';
 select habitacion_numero, precio_por_noche from habitaciones where precio_por_noche between 75 and 90;
 
 -- calcular el precio total de una reserva
-select r.reservas_id, h.precio_por_noche * datediff(r.fin_fecha, r.inicio_fecha) as precio_total_estimado
+select r.reservas_id, h.precio_por_noche * datediff(r.fin_fecha, r.inicio_fecha) precio_total_reserva
 from reservas r
 join habitaciones h on r.habitacion = h.habitacion_numero
 where r.reservas_id = 1;
 
--- Listar las reservas hechas por la huésped 'Ana Martinez'):
+-- Listar todos los huespedes que son de Argentina.
+select * from huespedes;
+select distinct hues.huesped_id, concat(hues.nombres,' ', hues.apellidos) nombre_huesped
+		from huespedes hues join reservas r on hues.huesped_id=r.huesped
+         where hues.pais like'Argentina';
+         
+-- Listar todos los huespedes agrupados por ciudad.
+select * from huespedes;
+select distinct hues.huesped_id, hues.ciudad, concat(hues.nombres,' ', hues.apellidos) nombre_huesped
+from huespedes hues join reservas r on hues.huesped_id=r.huesped
+order by hues.ciudad desc;
+
+-- Listar las reservas hechas por la huésped Ana Martinez
 select
     r.reservas_id,
     r.inicio_fecha,
     r.fin_fecha,
     hab.habitacion_numero,
     hab.precio_por_noche
-from reservas as r
-join huespedes as hues on r.huesped = hues.huesped_id
-join habitaciones as hab on r.habitacion = hab.habitacion_numero
+from reservas r
+join huespedes hues on r.huesped = hues.huesped_id
+join habitaciones hab on r.habitacion = hab.habitacion_numero
 where hues.nombres = 'Ana' and hues.apellidos = 'Martinez';
 
 -- Obtener el promedio de precio por noche de todas las habitaciones:
 select avg(precio_por_noche) as precio_promedio_noche from habitaciones;
 
--- reservas por habitacion
+-- muestra las reservas por habitacion
 select habitacion, count(reservas_id) as total_reservas
 from reservas
 group by habitacion
@@ -123,12 +136,14 @@ where h.habitacion_numero not in (
     where (r.inicio_fecha <= '2025-08-30' and r.fin_fecha >= '2025-08-25')
 );
 
--- Mostrar las reservas con número de habitación y su precio por noche
-SELECT
+-- Muestra las reservas con número de habitación y su precio por noche
+select
     r.reservas_id,
     r.inicio_fecha,
     r.fin_fecha,
     hab.habitacion_numero,
     hab.precio_por_noche
-FROM reservas AS r
-JOIN habitaciones AS hab ON r.habitacion = hab.habitacion_numero;
+from reservas r
+join habitaciones hab on r.habitacion = hab.habitacion_numero;
+
+
