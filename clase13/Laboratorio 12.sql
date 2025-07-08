@@ -97,8 +97,8 @@ where r.reservas_id = 1;
 -- Listar todos los huespedes que son de Argentina.
 select * from huespedes;
 select distinct hues.huesped_id, concat(hues.nombres,' ', hues.apellidos) nombre_huesped
-		from huespedes hues join reservas r on hues.huesped_id=r.huesped
-         where hues.pais like'Argentina';
+from huespedes hues join reservas r on hues.huesped_id=r.huesped
+where hues.pais like'Argentina';
          
 -- Listar todos los huespedes agrupados por ciudad.
 select * from huespedes;
