@@ -4,8 +4,9 @@ CREATE DATABASE reservas;
 show databases;
 use reservas;
 show tables;
-drop table reservas;
-drop table habitaciones;
+drop table if exists reservas;
+drop table if exists habitaciones;
+drop table if exists huespedes;
 
 -- Ingresar registros de prueba.
 CREATE TABLE  habitaciones
@@ -20,18 +21,6 @@ CREATE TABLE  habitaciones
       tiene_balcon tinyint
    );
    
-   CREATE TABLE  reservas
-   (
-      reservas_id int,
-      inicio_fecha datetime,
-      fin_fecha datetime,
-      habitacion int,
-      huesped int,
-      constraint reservas_id_pk primary key (reservas_id),
-      constraint reserv_habit_fk foreign key (habitacion) references habitaciones (habitacion_numero),
-      constraint huesp_habit_fk foreign key (huesped) references huespedes (huesped_id)
-   );
-   
    CREATE TABLE  huespedes
    (
       huesped_id int PRIMARY KEY,
@@ -42,6 +31,18 @@ CREATE TABLE  habitaciones
       direccion varchar(45),
       ciudad varchar(45),
       pais varchar(45)
+   );
+
+ CREATE TABLE  reservas
+   (
+      reservas_id int,
+      inicio_fecha datetime,
+      fin_fecha datetime,
+      habitacion int,
+      huesped int,
+      constraint reservas_id_pk primary key (reservas_id),
+      constraint reserv_habit_fk foreign key (habitacion) references habitaciones (habitacion_numero),
+      constraint huesp_habit_fk foreign key (huesped) references huespedes (huesped_id)
    );
    
 INSERT INTO habitaciones VALUES
